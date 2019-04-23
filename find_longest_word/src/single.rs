@@ -2,9 +2,15 @@ use std::env;
 use std::fs;
 use std::time;
 
+#[derive(Copy, Clone)]
+struct LongestMeta {
+    start_pos: usize,
+    length: usize
+}
+
 fn test_for_longest(line: &str, start: usize, 
-                    end: usize, mut longest: String, 
-                    longest_len: usize) -> String {
+                    longest: LongestMeta,
+                    end: usize) -> LongestMeta {
     //iterate through line, char by char
     //x is the index of char
     for x in start+1..end {
@@ -16,61 +22,58 @@ fn test_for_longest(line: &str, start: usize,
             //if x is a space and the len of the substring is greater
             //than the prior longest, check if substring is longester
             //check to the left
-            if x - start > longest_len {
-                longest = test_for_longest(line, start, end - 1,
-                                            longest, longest_len);
+            if x - start > longest.length {
+                test_for_longest(line, start, longest, end - 1);
             }
             //check to the right
-            if end - x + 1 > longest_len {
-                longest = test_for_longest(line, start, end - 1,
-                                            longest, longest_len);
+            if end - x + 1 > longest.length {
+                test_for_longest(line, start, longest, end - 1);
             }
             //If x is a space, return `longest`
             //Note explicit `return`
             //Don't grok the need for this, but it is needed.
             //irc says it's needed because of the missing `else`, but
             //the docs don't mention this so ¯\_(ツ)_/¯
-            return longest
+            return longest;
         }
     }
-    //return the longest
-    //due to Rust's treatment of all strings as UTF8
-    //This will `skip()` to the first char in the substring
-    //we `take()` all char from `start` to the end of the word
-    //then `collect()` it back into `std::string::String`
-    //We use `collect()` because `line` is a `&str` and we want
-    //to return a `String` so it needs to be transformed via iteration
-    //I tried the &str[start..end] method but that panicks for $REASONS
-    //A shame because I believe that would speed this up
-    line.chars().skip(start).take(end - start + 1).collect()
+    if start != longest.start_pos && end - start + 1 != longest.length {
+        LongestMeta {
+            start_pos: start,
+            length: end - start + 1
+        }
+    } else {
+        longest
+    }
 }
 
 fn striding_longest(file: String) -> String {
-    let mut longest_len: usize = 0;
-    let mut longest = String::new();
+    let mut longest_meta = LongestMeta {
+        start_pos: 0,
+        length: 0
+    };
+    let mut longest_word = String::new();
     for words in file.lines() {
         let line_len = words.len();
-        if line_len > longest_len {
+        if line_len > longest_meta.length {
             let mut start: usize = 0;
-            let mut pos = longest_len + 1;
+            let mut pos = longest_meta.length + 1;
             while pos < line_len {
                 if words.chars().nth(pos) == Some(' ') {
-                    longest = test_for_longest(&words, start, pos - 1,
-                                               longest, longest_len);
-                    longest_len = longest.len();
+                    longest_meta = test_for_longest(&words, start, longest_meta, pos - 1);
+                    longest_word = words.chars().skip(longest_meta.start_pos).take(longest_meta.length).collect();
                     start = pos + 1;
-                    pos = start + longest_len + 1;
+                    pos = start + longest_meta.length + 1;
                 } else {
                     pos = pos + 1;
                 }
             }
-            if line_len - 1 - start > longest_len {
-                longest = test_for_longest(&words, start, pos - 1,
-                                            longest, longest_len);
+            if line_len - 1 - start > longest_meta.length {
+                longest_meta = test_for_longest(&words, start, longest_meta, pos - 1);
             }
         }
     }
-    longest
+    longest_word
 }
 
 fn get_longest(words: std::str::SplitWhitespace) -> std::string::String {
