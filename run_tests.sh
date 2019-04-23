@@ -12,13 +12,18 @@ echo "Bash"
 echo "Python"
 python3 test.py
 
+echo "JRuby"
+jruby -J-Xmx15G test.rb
+
 echo "Cython"
 python3 setup.py build_ext --inplace
 python3 run_cythoned_test.py
 
 echo "Rust"
-rustc -O find_longest.rs
-./find_longest corpus.txt
+cd ./find_longest_word/
+cargo build --release
+./target/release/find_longest_word corpus.txt
+cd ..
 
 echo "JS"
 node --experimental-worker test_stream.js
@@ -27,5 +32,10 @@ echo "Golang"
 go run ./timer.go
 
 echo "C++"
-g++ -march=native -Ofast -fomit-frame-pointer -fopenmp main.cpp timer.cpp
-./a.out
+cd cpp
+./build_test.sh
+./run_test.sh
+cd ..
+
+echo "Ruby"
+ruby test.rb

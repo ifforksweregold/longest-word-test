@@ -9,9 +9,12 @@ RUN apk update && apk add \
     go \
     python3 \
     python3-dev \
-    rust
+    rust \
+    cargo \
+    ruby \
+    jruby
 
 RUN pip3 install cython
 
-COPY * /home/
+COPY . /home/
 ENTRYPOINT sh /home/run_tests.sh

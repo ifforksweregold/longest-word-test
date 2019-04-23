@@ -19,25 +19,35 @@ Write your solution, add your name to the top, and send a pull request. It would
 
 ### Single-Threaded
 
-| Name             | Language   | Time (ms) | Notes                   |
-|------------------|------------|-----------|-------------------------|
-| @dnesbitt03qub   | C++        | 104       | Striding implementation | 
-| @pard68          | Rust       | 311       |                         |
-| Jeffrey Corcoran | C#         | 810       |                         |
-| @bbriggs         | Go         | 997       |                         |
-| @drewpearce      | Cython     | 1137      | Loop w/ longest         |
-| @dnesbitt03qub   | C++        | 1159      |                         |
-| @zombeej         | JavaScript | 1292      |                         |
-| @pard68          | Bash       | 1892      |                         |
-| @specs           | Python     | 2250      | Loop w/ longest         |
-| @specs           | Python     | 2656      | Comprehensions          |
-| @specs           | Python     | 3091      | Loop and sort           |
+| Name             | Language   | Time (ms) | Notes                                |
+|------------------|------------|-----------|--------------------------------------|
+| @dnesbitt03qub   | C++        | 418       | Striding implementation              |
+| @dnesbitt03qub   | C++        | 675       | Simple optimized                     |
+| @pard68          | Rust       | 1066      | Simple                               |
+| @pard68          | Rust       | 1069      | HashTable                            |
+| Jeffrey Corcoran | C#         | 2275      |                                      |
+| @bbriggs         | Go         | 2849      |                                      |
+| @zombeej         | JavaScript | 3941      |                                      |
+| @pard68          | Rust       | 4033      | Pythonic                             |
+| @pard68          | Rust       | 5760      | Striding                             |
+| @drewpearce      | Cython     | 6581      | Loop w/ longest                      |
+| @specs           | Python     | 12245     | Comprehensions                       |
+| @samwi           | JRuby      | 13565     |                                      |
+| @specs           | Python     | 14444     | Loop and sort                        |
+| @specs           | Python     | 16257     | Loop w/ longest                      |
+| @samwi           | Ruby       | 24383     |                                      |
+| @patrickcarver   | Elixir     | 47510     |                                      |
+| @pard68          | Bash       | ~5543     | Native speed - Not running in Docker |
 
 
 ### Concurrent
-| Name             | Language   | Time (ms) | Notes                   |
-|------------------|------------|-----------|-------------------------|
-| Jeffrey Corcoran | C#         | 266       |                         | 
+| Name             | Language | Time (ms) | Notes             |
+|------------------|----------|-----------|-------------------|
+| @pard68          | Rust     | 197       | HashTable         |
+| Jeffrey Corcoran | C#       | 716       |                   |
+| @pard68          | Rust     | 2016      | Pythonic          |
+| @samwi           | JRuby    | 4679      | 'Multithread 16.' |
+| @samwi           | Ruby     | 55339     | 'Multithread 8.'  |
 
 
 ### Methodology
